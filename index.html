@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>City Hope Seating</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
     <header>
@@ -24,6 +24,17 @@
 
         <div id="seating-grid" class="seating-grid"></div>
     </main>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Clear All Seats?</h2>
+            <p>This will reset all assignments for the next service. Are you sure?</p>
+            <div class="modal-actions">
+                <button id="cancelBtn" class="outline-btn">Cancel</button>
+                <button id="confirmClearBtn" class="danger-btn">Yes, Clear</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
