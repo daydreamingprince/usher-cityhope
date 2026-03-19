@@ -130,3 +130,61 @@ h1 {
     border-color: var(--occupied);
     transform: scale(0.98);
 }
+
+/* --- NEW: Custom Modal Styles --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(4, 44, 39, 0.6); /* Dark teal overlay from your logo */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex; /* Shows the modal when the class is added */
+}
+
+.modal-content {
+    background: var(--bg);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transform: scale(0.95);
+    animation: popIn 0.2s ease forwards;
+}
+
+@keyframes popIn {
+    to { transform: scale(1); }
+}
+
+.modal-content h2 { margin-bottom: 10px; }
+.modal-content p { color: #64748B; margin-bottom: 24px; }
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.danger-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #EF4444; 
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.danger-btn:active {
+    background: #DC2626;
+}
