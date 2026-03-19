@@ -94,39 +94,38 @@ h1 {
 .seating-grid {
     display: flex;
     flex-direction: column;
-    /* Scales the gap between rows dynamically */
-    gap: clamp(4px, 1.2vw, 10px); 
-    padding: 20px 10px 60px 10px;
+    gap: clamp(4px, 1vw, 8px); 
+    /* Reduced side padding slightly to give Row M maximum breathing room */
+    padding: 20px 5px 60px 5px; 
     width: 100%;
     align-items: center; 
 }
 
 .row {
     display: flex;
-    /* Scales the gap between seats dynamically */
-    gap: clamp(3px, 0.8vw, 8px); 
+    /* Adjusted gap to ensure 23 items fit within 100vw */
+    gap: clamp(2px, 0.6vw, 6px); 
     justify-content: center;
     width: 100%;
 }
 
 .aisle {
-    /* Scales walkway width */
-    width: clamp(12px, 3vw, 35px); 
+    width: clamp(10px, 2.5vw, 25px); 
     flex-shrink: 0;
 }
 
 .hidden-seat {
-    width: clamp(24px, 3.8vw, 48px);
-    height: clamp(24px, 3.8vw, 48px);
+    width: clamp(20px, 3.2vw, 42px);
+    height: clamp(20px, 3.2vw, 42px);
     visibility: hidden;
     pointer-events: none;
     flex-shrink: 0;
 }
 
 .seat {
-    /* Fluid sizing: minimum 24px, ideally 3.8% of screen width, maximum 48px */
-    width: clamp(24px, 3.8vw, 48px);
-    height: clamp(24px, 3.8vw, 48px);
+    /* Slightly smaller max-width to fix the overflow on Row M */
+    width: clamp(20px, 3.2vw, 42px);
+    height: clamp(20px, 3.2vw, 42px);
     border-radius: clamp(4px, 0.8vw, 10px);
     border: 2px solid var(--vacant-border);
     background: var(--vacant-bg);
@@ -134,8 +133,7 @@ h1 {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    /* Fluid font size so text never escapes the box */
-    font-size: clamp(0.65rem, 1.4vw, 1rem); 
+    font-size: clamp(0.55rem, 1.2vw, 0.9rem); 
     color: #64748B;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
