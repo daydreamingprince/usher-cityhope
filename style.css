@@ -7,6 +7,11 @@
     --damaged: #EF4444; 
     --text: #0F172A;
     --bg: #FFFFFF;
+
+    /* Base measurements to make math easy */
+    --seat-size: clamp(24px, 3.8vw, 48px);
+    --seat-gap: clamp(3px, 0.8vw, 8px);
+    --aisle-size: clamp(12px, 3vw, 35px);
 }
 
 * {
@@ -59,9 +64,7 @@ h1 {
     transition: background 0.2s ease;
 }
 
-.outline-btn:active {
-    background: var(--vacant-border);
-}
+.outline-btn:active { background: var(--vacant-border); }
 
 .legend {
     display: flex;
@@ -90,42 +93,59 @@ h1 {
 .box.occupied { background: var(--occupied); border-color: var(--occupied); }
 .box.damaged { background: var(--damaged); border-color: var(--damaged); }
 
-/* --- DYNAMIC RESPONSIVE GRID --- */
+/* --- SECTIONED RESPONSIVE GRID --- */
 .seating-grid {
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, 1vw, 8px); 
-    /* Reduced side padding slightly to give Row M maximum breathing room */
-    padding: 20px 5px 60px 5px; 
+    gap: clamp(4px, 1.2vw, 10px); 
+    padding: 20px 10px 60px 10px;
     width: 100%;
     align-items: center; 
 }
 
 .row {
     display: flex;
-    /* Adjusted gap to ensure 23 items fit within 100vw */
-    gap: clamp(2px, 0.6vw, 6px); 
+    /* The space between the 3 sections automatically acts as our aisle! */
+    gap: var(--aisle-size); 
     justify-content: center;
     width: 100%;
 }
 
-.aisle {
-    width: clamp(10px, 2.5vw, 25px); 
-    flex-shrink: 0;
+.section {
+    display: flex;
+    gap: var(--seat-gap);
+}
+
+/* Strict widths based on the maximum seats allowed in each section */
+.section.left {
+    /* Max 6 seats */
+    width: calc(6 * var(--seat-size) + 5 * var(--seat-gap));
+    justify-content: flex-end; /* Pushes seats toward the aisle */
+}
+
+.section.mid {
+    /* Max 8 seats (M7 to M14) */
+    width: calc(8 * var(--seat-size) + 7 * var(--seat-gap));
+    justify-content: center; /* Centers Row L's 7 seats inside the 8-seat space */
+}
+
+.section.right {
+    /* Max 7 seats (M15 to M21) */
+    width: calc(7 * var(--seat-size) + 6 * var(--seat-gap));
+    justify-content: flex-start; /* Pushes seats toward the aisle */
 }
 
 .hidden-seat {
-    width: clamp(20px, 3.2vw, 42px);
-    height: clamp(20px, 3.2vw, 42px);
+    width: var(--seat-size);
+    height: var(--seat-size);
     visibility: hidden;
     pointer-events: none;
     flex-shrink: 0;
 }
 
 .seat {
-    /* Slightly smaller max-width to fix the overflow on Row M */
-    width: clamp(20px, 3.2vw, 42px);
-    height: clamp(20px, 3.2vw, 42px);
+    width: var(--seat-size);
+    height: var(--seat-size);
     border-radius: clamp(4px, 0.8vw, 10px);
     border: 2px solid var(--vacant-border);
     background: var(--vacant-bg);
@@ -133,7 +153,7 @@ h1 {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: clamp(0.55rem, 1.2vw, 0.9rem); 
+    font-size: clamp(0.65rem, 1.4vw, 1rem); 
     color: #64748B;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
@@ -141,72 +161,33 @@ h1 {
     flex-shrink: 0;
 }
 
-.seat.assigned {
-    background: var(--assigned);
-    color: white;
-    border-color: var(--assigned);
-    transform: scale(0.96);
-}
-
-.seat.occupied {
-    background: var(--occupied);
-    color: white;
-    border-color: var(--occupied);
-    transform: scale(0.96);
-}
-
-.seat.damaged {
-    background: var(--damaged);
-    color: white;
-    border-color: var(--damaged);
-    transform: scale(0.96);
-}
+.seat.assigned { background: var(--assigned); color: white; border-color: var(--assigned); transform: scale(0.96); }
+.seat.occupied { background: var(--occupied); color: white; border-color: var(--occupied); transform: scale(0.96); }
+.seat.damaged { background: var(--damaged); color: white; border-color: var(--damaged); transform: scale(0.96); }
 
 /* Modal Styles */
 .modal {
-    display: none; 
-    position: fixed;
+    display: none; position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(4, 44, 39, 0.6); 
-    align-items: center;
-    justify-content: center;
+    align-items: center; justify-content: center;
     z-index: 1000;
 }
-
 .modal.active { display: flex; }
 
 .modal-content {
-    background: var(--bg);
-    padding: 2rem;
-    border-radius: 16px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
+    background: var(--bg); padding: 2rem; border-radius: 16px;
+    text-align: center; max-width: 400px; width: 90%;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    transform: scale(0.95);
-    animation: popIn 0.2s ease forwards;
+    transform: scale(0.95); animation: popIn 0.2s ease forwards;
 }
-
 @keyframes popIn { to { transform: scale(1); } }
-
 .modal-content h2 { margin-bottom: 10px; }
 .modal-content p { color: #64748B; margin-bottom: 24px; }
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
 
 .danger-btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    background: #EF4444; 
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
+    padding: 10px 20px; border-radius: 8px; border: none; background: #EF4444; color: white;
+    font-weight: 600; cursor: pointer; transition: background 0.2s ease;
 }
-
 .danger-btn:active { background: #DC2626; }
