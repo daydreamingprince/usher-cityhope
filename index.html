@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>City Hope Seating</title>
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <header>
@@ -25,6 +25,19 @@
 
         <div id="seating-grid" class="seating-grid"></div>
     </main>
+
+    <div id="seatActionMenu" class="modal">
+        <div class="modal-content action-menu">
+            <h2 id="selectedSeatTitle">Seat --</h2>
+            <div class="action-grid">
+                <button class="action-btn vacant-btn" data-state="0">Vacant</button>
+                <button class="action-btn assigned-btn" data-state="1">Assigned</button>
+                <button class="action-btn occupied-btn" data-state="2">Occupied</button>
+                <button class="action-btn damaged-btn" data-state="3">Damaged</button>
+            </div>
+            <button id="closeActionMenu" class="outline-btn close-btn">Cancel</button>
+        </div>
+    </div>
 
     <div id="confirmModal" class="modal">
         <div class="modal-content">

@@ -1,4 +1,3 @@
-// Exact map provided. No hacks needed!
 const cinemaLayout = [
     ['A1', 'A2', 'gap', 'A3', 'aisle', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'aisle', 'A11', 'A12', 'A13', 'A14'],
     ['B1', 'B2', 'B3', 'B4', 'aisle', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'aisle', 'B12', 'B13', 'B14', 'B15'],
@@ -20,6 +19,13 @@ const resetBtn = document.getElementById('resetBtn');
 
 let seats = JSON.parse(localStorage.getItem('cityHopeCinemaLayout')) || {};
 
+// --- Menu State Variables ---
+let activeSeatId = null; 
+const seatActionMenu = document.getElementById('seatActionMenu');
+const selectedSeatTitle = document.getElementById('selectedSeatTitle');
+const closeActionMenu = document.getElementById('closeActionMenu');
+const actionBtns = document.querySelectorAll('.action-btn');
+
 function saveSeats() {
     localStorage.setItem('cityHopeCinemaLayout', JSON.stringify(seats));
 }
@@ -31,7 +37,6 @@ function renderSeats() {
         const rowEl = document.createElement('div');
         rowEl.classList.add('row');
 
-        // Split the row array into three blocks based on the 'aisle' marker
         const sections = [];
         let currentSection = [];
         rowArr.forEach(item => {
@@ -42,9 +47,8 @@ function renderSeats() {
                 currentSection.push(item);
             }
         });
-        sections.push(currentSection); // push the final block
+        sections.push(currentSection); 
 
-        // Create the 3 strict sections for perfect alignment
         const sectionClasses = ['left', 'mid', 'right'];
 
         sections.forEach((secArr, index) => {
@@ -68,10 +72,11 @@ function renderSeats() {
                     if (state === 2) seatEl.classList.add('occupied');
                     if (state === 3) seatEl.classList.add('damaged');
 
+                    // NEW LOGIC: Open the menu instead of cycling
                     seatEl.addEventListener('click', () => {
-                        seats[seatId] = (seats[seatId] + 1) % 4;
-                        saveSeats();
-                        renderSeats(); 
+                        activeSeatId = seatId;
+                        selectedSeatTitle.textContent = `Seat ${seatId}`;
+                        seatActionMenu.classList.add('active');
                     });
 
                     secEl.appendChild(seatEl);
@@ -84,7 +89,28 @@ function renderSeats() {
     });
 }
 
-// Modal Logic
+// --- Action Menu Logic ---
+// Handle the 4 state buttons
+actionBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        if (activeSeatId) {
+            const newState = parseInt(e.target.getAttribute('data-state'));
+            seats[activeSeatId] = newState;
+            saveSeats();
+            renderSeats();
+            seatActionMenu.classList.remove('active');
+            activeSeatId = null;
+        }
+    });
+});
+
+// Close Action Menu with Cancel Button
+closeActionMenu.addEventListener('click', () => { 
+    seatActionMenu.classList.remove('active'); 
+    activeSeatId = null;
+});
+
+// --- Clear All Modal Logic ---
 const confirmModal = document.getElementById('confirmModal');
 const cancelBtn = document.getElementById('cancelBtn');
 const confirmClearBtn = document.getElementById('confirmClearBtn');
@@ -99,6 +125,17 @@ confirmClearBtn.addEventListener('click', () => {
     saveSeats();
     renderSeats();
     confirmModal.classList.remove('active');
+});
+
+// --- Pro-Tip: Close Modals by Clicking the Dark Background ---
+window.addEventListener('click', (e) => {
+    if (e.target === confirmModal) {
+        confirmModal.classList.remove('active');
+    }
+    if (e.target === seatActionMenu) {
+        seatActionMenu.classList.remove('active');
+        activeSeatId = null;
+    }
 });
 
 // Initial render
