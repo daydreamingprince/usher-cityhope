@@ -4,7 +4,7 @@
     --vacant-border: #E2E8F0;
     --assigned: #F59E0B; 
     --occupied: #042C27; 
-    --damaged: #EF4444; /* Clean Red for damaged seats */
+    --damaged: #EF4444; 
     --text: #0F172A;
     --bg: #FFFFFF;
 }
@@ -90,48 +90,52 @@ h1 {
 .box.occupied { background: var(--occupied); border-color: var(--occupied); }
 .box.damaged { background: var(--damaged); border-color: var(--damaged); }
 
+/* --- DYNAMIC RESPONSIVE GRID --- */
 .seating-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px; 
-    padding: 20px 1rem 60px 1rem;
-    max-width: 100%;
-    overflow-x: auto; 
+    /* Scales the gap between rows dynamically */
+    gap: clamp(4px, 1.2vw, 10px); 
+    padding: 20px 10px 60px 10px;
+    width: 100%;
     align-items: center; 
 }
 
 .row {
     display: flex;
-    gap: 8px; 
+    /* Scales the gap between seats dynamically */
+    gap: clamp(3px, 0.8vw, 8px); 
     justify-content: center;
+    width: 100%;
 }
 
-/* Walkways */
 .aisle {
-    width: 35px; 
+    /* Scales walkway width */
+    width: clamp(12px, 3vw, 35px); 
     flex-shrink: 0;
 }
 
-/* Invisible seats to keep the physical grid aligned perfectly */
 .hidden-seat {
-    width: 50px;
-    height: 50px;
+    width: clamp(24px, 3.8vw, 48px);
+    height: clamp(24px, 3.8vw, 48px);
     visibility: hidden;
     pointer-events: none;
     flex-shrink: 0;
 }
 
 .seat {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
+    /* Fluid sizing: minimum 24px, ideally 3.8% of screen width, maximum 48px */
+    width: clamp(24px, 3.8vw, 48px);
+    height: clamp(24px, 3.8vw, 48px);
+    border-radius: clamp(4px, 0.8vw, 10px);
     border: 2px solid var(--vacant-border);
     background: var(--vacant-bg);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 1rem; 
+    /* Fluid font size so text never escapes the box */
+    font-size: clamp(0.65rem, 1.4vw, 1rem); 
     color: #64748B;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
