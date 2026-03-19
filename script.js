@@ -3,7 +3,6 @@ const TOTAL_SEATS = 120;
 const seatGrid = document.getElementById('seating-grid');
 const resetBtn = document.getElementById('resetBtn');
 
-// State legend: 0 = Vacant, 1 = Assigned, 2 = Occupied
 // Load saved seats from local storage, or create a fresh batch of vacant seats
 let seats = JSON.parse(localStorage.getItem('cityHopeSeats')) || Array(TOTAL_SEATS).fill(0);
 
@@ -35,13 +34,27 @@ function renderSeats() {
     });
 }
 
-// Reset button logic with a safety confirmation
+// --- NEW: Modal Logic ---
+const confirmModal = document.getElementById('confirmModal');
+const cancelBtn = document.getElementById('cancelBtn');
+const confirmClearBtn = document.getElementById('confirmClearBtn');
+
+// Show the modal when "Clear All" is clicked
 resetBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to clear all seating assignments for the next service?')) {
-        seats = Array(TOTAL_SEATS).fill(0);
-        saveSeats();
-        renderSeats();
-    }
+    confirmModal.classList.add('active');
+});
+
+// Hide the modal if they click "Cancel"
+cancelBtn.addEventListener('click', () => {
+    confirmModal.classList.remove('active');
+});
+
+// Actually clear the seats if they click "Yes, Clear"
+confirmClearBtn.addEventListener('click', () => {
+    seats = Array(TOTAL_SEATS).fill(0);
+    saveSeats();
+    renderSeats();
+    confirmModal.classList.remove('active'); // Hide modal after clearing
 });
 
 // Initial render on page load
