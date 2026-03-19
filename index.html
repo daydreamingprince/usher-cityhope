@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>City Hope Seating</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="./assets/logo.jpg" alt="City Hope Church Logo" class="logo">
+            <h1>Seating Manager</h1>
+        </div>
+        <button id="resetBtn" class="outline-btn">Clear All</button>
+    </header>
+
+    <main>
+        <div class="legend">
+            <div class="legend-item"><span class="box vacant"></span> Vacant</div>
+            <div class="legend-item"><span class="box assigned"></span> Assigned</div>
+            <div class="legend-item"><span class="box occupied"></span> Occupied</div>
+        </div>
+
+        <div id="seating-grid" class="seating-grid"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
