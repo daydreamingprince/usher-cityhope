@@ -1,10 +1,9 @@
 :root {
-    /* Colors inspired by your logo and a modern minimal palette */
     --primary: #042C27; 
     --vacant-bg: #F8FAFC;
     --vacant-border: #E2E8F0;
-    --assigned: #F59E0B; /* Warm gold/yellow */
-    --occupied: #042C27; /* Dark teal from logo */
+    --assigned: #F59E0B; 
+    --occupied: #042C27; 
     --text: #0F172A;
     --bg: #FFFFFF;
 }
@@ -19,7 +18,6 @@
 body {
     background-color: var(--bg);
     color: var(--text);
-    /* Improves touch responsiveness on iOS */
     touch-action: manipulation; 
     -webkit-tap-highlight-color: transparent;
 }
@@ -90,18 +88,31 @@ h1 {
 .box.assigned { background: var(--assigned); border-color: var(--assigned); }
 .box.occupied { background: var(--occupied); border-color: var(--occupied); }
 
+/* --- NEW: Layout-based Grid Styles --- */
 .seating-grid {
-    display: grid;
-    /* Automatically creates columns based on screen width */
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 12px;
-    padding: 20px 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between rows */
+    padding: 20px 1rem 60px 1rem;
+    max-width: 100%;
+    overflow-x: auto; /* Allows panning if the cinema is super wide */
+    align-items: center; /* Centers the whole block */
+}
+
+.row {
+    display: flex;
+    gap: 8px; /* Space between seats */
+    justify-content: center;
+}
+
+.aisle {
+    width: 35px; /* Adjust this to make the walkway wider or narrower */
+    flex-shrink: 0;
 }
 
 .seat {
-    aspect-ratio: 1 / 1;
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
     border: 2px solid var(--vacant-border);
     background: var(--vacant-bg);
@@ -109,45 +120,40 @@ h1 {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem; /* Slightly smaller to fit A10, B15, etc. */
     color: #64748B;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
     user-select: none;
+    flex-shrink: 0;
 }
 
-/* Dynamic State Classes */
 .seat.assigned {
     background: var(--assigned);
     color: white;
     border-color: var(--assigned);
-    transform: scale(0.98);
+    transform: scale(0.96);
 }
 
 .seat.occupied {
     background: var(--occupied);
     color: white;
     border-color: var(--occupied);
-    transform: scale(0.98);
+    transform: scale(0.96);
 }
 
-/* --- NEW: Custom Modal Styles --- */
+/* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(4, 44, 39, 0.6); /* Dark teal overlay from your logo */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(4, 44, 39, 0.6); 
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-.modal.active {
-    display: flex; /* Shows the modal when the class is added */
-}
+.modal.active { display: flex; }
 
 .modal-content {
     background: var(--bg);
@@ -161,9 +167,7 @@ h1 {
     animation: popIn 0.2s ease forwards;
 }
 
-@keyframes popIn {
-    to { transform: scale(1); }
-}
+@keyframes popIn { to { transform: scale(1); } }
 
 .modal-content h2 { margin-bottom: 10px; }
 .modal-content p { color: #64748B; margin-bottom: 24px; }
@@ -185,6 +189,4 @@ h1 {
     transition: background 0.2s ease;
 }
 
-.danger-btn:active {
-    background: #DC2626;
-}
+.danger-btn:active { background: #DC2626; }
