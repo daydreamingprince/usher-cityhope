@@ -34,6 +34,8 @@ header {
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--vacant-border);
     box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    flex-wrap: wrap; /* Helps on smaller screens */
+    gap: 15px;
 }
 
 .brand {
@@ -42,15 +44,33 @@ header {
     gap: 15px;
 }
 
-.logo {
-    height: 48px;
-    width: auto;
+.logo { height: 48px; width: auto; }
+h1 { font-size: 1.5rem; font-weight: 600; }
+
+/* --- NEW: Header Actions & Stats Pill --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-h1 {
-    font-size: 1.5rem;
+.stats-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--vacant-bg);
+    border: 2px solid var(--vacant-border);
+    padding: 8px 16px;
+    border-radius: 30px; /* Makes it look like a modern pill */
     font-weight: 600;
+    font-size: 0.95rem;
 }
+
+.stat { display: flex; align-items: baseline; gap: 6px; }
+.vacant-stat { color: #64748B; }
+.occupied-stat { color: var(--occupied); }
+.stat-number { font-size: 1.2rem; font-weight: 700; }
+.divider { color: #CBD5E1; font-weight: 300; }
 
 .outline-btn {
     padding: 10px 20px;
@@ -66,26 +86,15 @@ h1 {
 .outline-btn:active { background: var(--vacant-border); }
 
 .legend {
-    display: flex;
-    gap: 24px;
-    padding: 20px;
-    justify-content: center;
-    font-weight: 500;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    display: flex; gap: 24px; padding: 20px;
+    justify-content: center; font-weight: 500; flex-wrap: wrap; 
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+.legend-item { display: flex; align-items: center; gap: 8px; }
 
 .box {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    border: 2px solid;
+    display: inline-block; width: 24px; height: 24px;
+    border-radius: 6px; border: 2px solid;
 }
 
 .box.vacant { background: var(--vacant-bg); border-color: var(--vacant-border); }
@@ -95,25 +104,13 @@ h1 {
 
 /* --- GRID --- */
 .seating-grid {
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     gap: clamp(4px, 1.2vw, 10px); 
-    padding: 20px 10px 60px 10px;
-    width: 100%;
-    align-items: center; 
+    padding: 20px 10px 60px 10px; width: 100%; align-items: center; 
 }
 
-.row {
-    display: flex;
-    gap: var(--aisle-size); 
-    justify-content: center;
-    width: 100%;
-}
-
-.section {
-    display: flex;
-    gap: var(--seat-gap);
-}
+.row { display: flex; gap: var(--aisle-size); justify-content: center; width: 100%; }
+.section { display: flex; gap: var(--seat-gap); }
 
 .section.left { width: calc(6 * var(--seat-size) + 5 * var(--seat-gap)); justify-content: flex-end; }
 .section.mid { width: calc(8 * var(--seat-size) + 7 * var(--seat-gap)); justify-content: center; }
@@ -122,36 +119,29 @@ h1 {
 .hidden-seat { width: var(--seat-size); height: var(--seat-size); visibility: hidden; pointer-events: none; flex-shrink: 0; }
 
 .seat {
-    width: var(--seat-size);
-    height: var(--seat-size);
-    border-radius: clamp(4px, 0.8vw, 10px);
-    border: 2px solid var(--vacant-border);
-    background: var(--vacant-bg);
-    display: flex; align-items: center; justify-content: center;
+    width: var(--seat-size); height: var(--seat-size);
+    border-radius: clamp(4px, 0.8vw, 10px); border: 2px solid var(--vacant-border);
+    background: var(--vacant-bg); display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: clamp(0.65rem, 1.4vw, 1rem); 
     color: #64748B; cursor: pointer; transition: all 0.15s ease-in-out;
     user-select: none; flex-shrink: 0;
 }
 
-.seat:active { transform: scale(0.92); } /* Gives physical feedback when tapped */
+.seat:active { transform: scale(0.92); } 
 .seat.assigned { background: var(--assigned); color: white; border-color: var(--assigned); }
 .seat.occupied { background: var(--occupied); color: white; border-color: var(--occupied); }
 .seat.damaged { background: var(--damaged); color: white; border-color: var(--damaged); }
 
-/* --- MODALS --- */
+/* --- MODALS & ACTION MENU --- */
 .modal {
-    display: none; position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(4, 44, 39, 0.6); 
-    align-items: center; justify-content: center;
-    z-index: 1000;
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(4, 44, 39, 0.6); align-items: center; justify-content: center; z-index: 1000;
 }
 .modal.active { display: flex; }
 
 .modal-content {
-    background: var(--bg); padding: 2rem; border-radius: 16px;
-    text-align: center; max-width: 400px; width: 90%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    background: var(--bg); padding: 2rem; border-radius: 16px; text-align: center; 
+    max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     transform: scale(0.95); animation: popIn 0.2s ease forwards;
 }
 @keyframes popIn { to { transform: scale(1); } }
@@ -165,24 +155,10 @@ h1 {
 }
 .danger-btn:active { background: #DC2626; }
 
-/* --- NEW: ACTION MENU SPECIFICS --- */
 .action-menu { padding: 1.5rem; max-width: 320px; }
 .action-menu h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--primary); }
-.action-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-.action-btn {
-    padding: 20px 10px;
-    border-radius: 12px;
-    border: 2px solid;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.action-btn { padding: 20px 10px; border-radius: 12px; border: 2px solid; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: transform 0.1s; }
 .action-btn:active { transform: scale(0.95); }
 .vacant-btn { color: #64748B; border-color: var(--vacant-border); background: var(--vacant-bg); }
 .assigned-btn { color: white; border-color: var(--assigned); background: var(--assigned); }

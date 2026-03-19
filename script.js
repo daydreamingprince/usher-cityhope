@@ -17,6 +17,10 @@ const cinemaLayout = [
 const seatGrid = document.getElementById('seating-grid');
 const resetBtn = document.getElementById('resetBtn');
 
+// New elements for the stats
+const countVacantEl = document.getElementById('countVacant');
+const countOccupiedEl = document.getElementById('countOccupied');
+
 let seats = JSON.parse(localStorage.getItem('cityHopeCinemaLayout')) || {};
 
 // --- Menu State Variables ---
@@ -28,6 +32,22 @@ const actionBtns = document.querySelectorAll('.action-btn');
 
 function saveSeats() {
     localStorage.setItem('cityHopeCinemaLayout', JSON.stringify(seats));
+}
+
+// --- NEW: Calculate Stats ---
+function updateCounters() {
+    let vacantCount = 0;
+    let occupiedCount = 0;
+
+    // We simply loop through the seats object to find out what state they are in
+    for (const key in seats) {
+        if (seats[key] === 0) vacantCount++;
+        if (seats[key] === 2) occupiedCount++;
+    }
+
+    // Update the DOM
+    countVacantEl.textContent = vacantCount;
+    countOccupiedEl.textContent = occupiedCount;
 }
 
 function renderSeats() {
@@ -61,6 +81,7 @@ function renderSeats() {
                     gap.classList.add('hidden-seat');
                     secEl.appendChild(gap);
                 } else {
+                    // Ensures all valid seats are added to the dictionary properly
                     if (seats[seatId] === undefined) { seats[seatId] = 0; }
 
                     const seatEl = document.createElement('div');
@@ -72,7 +93,6 @@ function renderSeats() {
                     if (state === 2) seatEl.classList.add('occupied');
                     if (state === 3) seatEl.classList.add('damaged');
 
-                    // NEW LOGIC: Open the menu instead of cycling
                     seatEl.addEventListener('click', () => {
                         activeSeatId = seatId;
                         selectedSeatTitle.textContent = `Seat ${seatId}`;
@@ -87,10 +107,12 @@ function renderSeats() {
         
         seatGrid.appendChild(rowEl);
     });
+
+    // Run the counter update every time the grid renders
+    updateCounters();
 }
 
 // --- Action Menu Logic ---
-// Handle the 4 state buttons
 actionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         if (activeSeatId) {
@@ -104,7 +126,6 @@ actionBtns.forEach(btn => {
     });
 });
 
-// Close Action Menu with Cancel Button
 closeActionMenu.addEventListener('click', () => { 
     seatActionMenu.classList.remove('active'); 
     activeSeatId = null;
@@ -127,7 +148,7 @@ confirmClearBtn.addEventListener('click', () => {
     confirmModal.classList.remove('active');
 });
 
-// --- Pro-Tip: Close Modals by Clicking the Dark Background ---
+// Close Modals by Clicking the Dark Background
 window.addEventListener('click', (e) => {
     if (e.target === confirmModal) {
         confirmModal.classList.remove('active');

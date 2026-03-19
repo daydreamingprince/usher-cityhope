@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>City Hope Seating</title>
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
     <header>
@@ -12,7 +12,19 @@
             <img src="./assets/logo.jpg" alt="City Hope Church Logo" class="logo">
             <h1>City Hope Church Legazpi</h1>
         </div>
-        <button id="resetBtn" class="outline-btn">Clear All</button>
+        
+        <div class="header-actions">
+            <div class="stats-pill">
+                <div class="stat vacant-stat">
+                    <span id="countVacant" class="stat-number">0</span> Vacant
+                </div>
+                <div class="divider">|</div>
+                <div class="stat occupied-stat">
+                    <span id="countOccupied" class="stat-number">0</span> Occupied
+                </div>
+            </div>
+            <button id="resetBtn" class="outline-btn">Clear All</button>
+        </div>
     </header>
 
     <main>
