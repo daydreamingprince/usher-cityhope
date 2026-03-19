@@ -4,6 +4,7 @@
     --vacant-border: #E2E8F0;
     --assigned: #F59E0B; 
     --occupied: #042C27; 
+    --damaged: #EF4444; /* Clean Red for damaged seats */
     --text: #0F172A;
     --bg: #FFFFFF;
 }
@@ -87,26 +88,36 @@ h1 {
 .box.vacant { background: var(--vacant-bg); border-color: var(--vacant-border); }
 .box.assigned { background: var(--assigned); border-color: var(--assigned); }
 .box.occupied { background: var(--occupied); border-color: var(--occupied); }
+.box.damaged { background: var(--damaged); border-color: var(--damaged); }
 
-/* --- NEW: Layout-based Grid Styles --- */
 .seating-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between rows */
+    gap: 10px; 
     padding: 20px 1rem 60px 1rem;
     max-width: 100%;
-    overflow-x: auto; /* Allows panning if the cinema is super wide */
-    align-items: center; /* Centers the whole block */
+    overflow-x: auto; 
+    align-items: center; 
 }
 
 .row {
     display: flex;
-    gap: 8px; /* Space between seats */
+    gap: 8px; 
     justify-content: center;
 }
 
+/* Walkways */
 .aisle {
-    width: 35px; /* Adjust this to make the walkway wider or narrower */
+    width: 35px; 
+    flex-shrink: 0;
+}
+
+/* Invisible seats to keep the physical grid aligned perfectly */
+.hidden-seat {
+    width: 50px;
+    height: 50px;
+    visibility: hidden;
+    pointer-events: none;
     flex-shrink: 0;
 }
 
@@ -120,7 +131,7 @@ h1 {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 1rem; /* Slightly smaller to fit A10, B15, etc. */
+    font-size: 1rem; 
     color: #64748B;
     cursor: pointer;
     transition: all 0.15s ease-in-out;
@@ -139,6 +150,13 @@ h1 {
     background: var(--occupied);
     color: white;
     border-color: var(--occupied);
+    transform: scale(0.96);
+}
+
+.seat.damaged {
+    background: var(--damaged);
+    color: white;
+    border-color: var(--damaged);
     transform: scale(0.96);
 }
 
