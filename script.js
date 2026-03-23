@@ -1,17 +1,17 @@
 const cinemaLayout = [
-    ['A1', 'A2', 'gap', 'A3', 'aisle', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'aisle', 'A11', 'A12', 'A13', 'A14'],
-    ['B1', 'B2', 'B3', 'B4', 'aisle', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'aisle', 'B12', 'B13', 'B14', 'B15'],
-    ['C1', 'C2', 'C3', 'C4', 'aisle', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'aisle', 'C12', 'C13', 'C14', 'C15'],
-    ['D1', 'D2', 'D3', 'D4', 'aisle', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'aisle', 'D12', 'D13', 'D14', 'D15'],
-    ['E1', 'E2', 'E3', 'E4', 'aisle', 'E5', 'E6', 'E7', 'E8', 'E9', 'E10', 'E11', 'aisle', 'E12', 'E13', 'E14', 'E15'],
-    ['F1', 'F2', 'F3', 'F4', 'aisle', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'aisle', 'F12', 'F13', 'F14', 'F15'],
-    ['G1', 'G2', 'G3', 'G4', 'aisle', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10', 'G11', 'aisle', 'G12', 'G13', 'G14', 'G15'],
-    ['H1', 'H2', 'H3', 'H4', 'aisle', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'aisle', 'H12', 'H13', 'H14', 'H15'],
-    ['I1', 'I2', 'I3', 'I4', 'aisle', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'aisle', 'I12', 'I13', 'I14', 'I15'],
-    ['J1', 'J2', 'J3', 'J4', 'aisle', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'aisle', 'J12', 'J13', 'J14', 'J15'],
-    ['K1', 'K2', 'K3', 'K4', 'aisle', 'K5', 'K6', 'K7', 'K8', 'K9', 'K10', 'K11', 'aisle', 'K12', 'K13', 'K14', 'K15'],
-    ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'aisle', 'L7', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'aisle', 'L14', 'L15', 'L16', 'L17', 'L18', 'L19'],
-    ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'aisle', 'M7', 'M8', 'M9', 'M10', 'M11', 'M12', 'M13', 'M14', 'aisle', 'M15', 'M16', 'M17', 'M18', 'M19', 'M20', 'M21']
+    ['A14', 'A13', 'gap', 'A12', 'aisle', 'A11', 'A10', 'A9', 'A8', 'A7', 'A6', 'A5', 'aisle', 'A4', 'A3', 'A2', 'A1'],
+    ['B15', 'B14', 'B13', 'B12', 'aisle', 'B11', 'B10', 'B9', 'B8', 'B7', 'B6', 'B5', 'aisle', 'B4', 'B3', 'B2', 'B1'],
+    ['C15', 'C14', 'C13', 'C12', 'aisle', 'C11', 'C10', 'C9', 'C8', 'C7', 'C6', 'C5', 'aisle', 'C4', 'C3', 'C2', 'C1'],
+    ['D15', 'D14', 'D13', 'D12', 'aisle', 'D11', 'D10', 'D9', 'D8', 'D7', 'D6', 'D5', 'aisle', 'D4', 'D3', 'D2', 'D1'],
+    ['E15', 'E14', 'E13', 'E12', 'aisle', 'E11', 'E10', 'E9', 'E8', 'E7', 'E6', 'E5', 'aisle', 'E4', 'E3', 'E2', 'E1'],
+    ['F15', 'F14', 'F13', 'F12', 'aisle', 'F11', 'F10', 'F9', 'F8', 'F7', 'F6', 'F5', 'aisle', 'F4', 'F3', 'F2', 'F1'],
+    ['G15', 'G14', 'G13', 'G12', 'aisle', 'G11', 'G10', 'G9', 'G8', 'G7', 'G6', 'G5', 'aisle', 'G4', 'G3', 'G2', 'G1'],
+    ['H15', 'H14', 'H13', 'H12', 'aisle', 'H11', 'H10', 'H9', 'H8', 'H7', 'H6', 'H5', 'aisle', 'H4', 'H3', 'H2', 'H1'],
+    ['I15', 'I14', 'I13', 'I12', 'aisle', 'I11', 'I10', 'I9', 'I8', 'I7', 'I6', 'I5', 'aisle', 'I4', 'I3', 'I2', 'I1'],
+    ['J15', 'J14', 'J13', 'J12', 'aisle', 'J11', 'J10', 'J9', 'J8', 'J7', 'J6', 'J5', 'aisle', 'J4', 'J3', 'J2', 'J1'],
+    ['K15', 'K14', 'K13', 'K12', 'aisle', 'K11', 'K10', 'K9', 'K8', 'K7', 'K6', 'K5', 'aisle', 'K4', 'K3', 'K2', 'K1'],
+    ['L19', 'L18', 'L17', 'L16', 'L15', 'L14', 'aisle', 'L13', 'L12', 'L11', 'L10', 'L9', 'L8', 'L7', 'aisle', 'L6', 'L5', 'L4', 'L3', 'L2', 'L1'],
+    ['M21', 'M20', 'M19', 'M18', 'M17', 'M16', 'aisle', 'M15', 'M14', 'M13', 'M12', 'M11', 'M10', 'M9', 'M8', 'aisle', 'M7', 'M6', 'M5', 'M4', 'M3', 'M2', 'M1']
 ];
 
 const seatGrid = document.getElementById('seating-grid');
@@ -32,7 +32,6 @@ function saveSeats() {
     localStorage.setItem('cityHopeCinemaLayout', JSON.stringify(seats));
 }
 
-// --- NEW FIX: Strictly count only valid layout seats ---
 function updateCounters() {
     let vacantCount = 0;
     let occupiedCount = 0;
@@ -139,7 +138,6 @@ resetBtn.addEventListener('click', () => { confirmModal.classList.add('active');
 cancelBtn.addEventListener('click', () => { confirmModal.classList.remove('active'); });
 
 confirmClearBtn.addEventListener('click', () => {
-    // NEW FIX: Only clears valid seats in the current layout, ignoring ghost data
     cinemaLayout.forEach(rowArr => {
         rowArr.forEach(seatId => {
             if (seatId !== 'aisle' && seatId !== 'gap') {

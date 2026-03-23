@@ -78,9 +78,9 @@ h1 { font-size: 1.5rem; font-weight: 600; }
     padding: 20px 10px 60px 10px; width: 100%; align-items: center; 
 }
 
-/* NEW: flex-direction: row-reverse perfectly mirrors the cinema Right-to-Left */
-.row { display: flex; flex-direction: row-reverse; gap: var(--aisle-size); justify-content: center; width: 100%; }
-.section { display: flex; flex-direction: row-reverse; gap: var(--seat-gap); }
+/* Restored standard L-to-R rendering so gaps stay on the left */
+.row { display: flex; gap: var(--aisle-size); justify-content: center; width: 100%; }
+.section { display: flex; gap: var(--seat-gap); }
 
 .section.left { width: calc(6 * var(--seat-size) + 5 * var(--seat-gap)); justify-content: flex-end; }
 .section.mid { width: calc(8 * var(--seat-size) + 7 * var(--seat-gap)); justify-content: center; }
