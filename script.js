@@ -19,6 +19,7 @@ const resetBtn = document.getElementById('resetBtn');
 
 const countVacantEl = document.getElementById('countVacant');
 const countOccupiedEl = document.getElementById('countOccupied');
+const countReservedEl = document.getElementById('countReserved');
 
 let seats = JSON.parse(localStorage.getItem('cityHopeCinemaLayout')) || {};
 
@@ -35,19 +36,24 @@ function saveSeats() {
 function updateCounters() {
     let vacantCount = 0;
     let occupiedCount = 0;
+    let reservedCount = 0;
 
     cinemaLayout.forEach(rowArr => {
         rowArr.forEach(seatId => {
             if (seatId !== 'aisle' && seatId !== 'gap') {
                 const state = seats[seatId] !== undefined ? seats[seatId] : 0;
+                
                 if (state === 0) vacantCount++;
                 if (state === 2) occupiedCount++;
+                // Assigned, Bishop, Worship, and Dance all count toward Reserved
+                if (state === 1 || state === 4 || state === 5 || state === 6) reservedCount++;
             }
         });
     });
 
     countVacantEl.textContent = vacantCount;
     countOccupiedEl.textContent = occupiedCount;
+    countReservedEl.textContent = reservedCount;
 }
 
 function renderSeats() {
@@ -91,6 +97,9 @@ function renderSeats() {
                     if (state === 1) seatEl.classList.add('assigned');
                     if (state === 2) seatEl.classList.add('occupied');
                     if (state === 3) seatEl.classList.add('damaged');
+                    if (state === 4) seatEl.classList.add('bishop');
+                    if (state === 5) seatEl.classList.add('worship');
+                    if (state === 6) seatEl.classList.add('dance');
 
                     seatEl.addEventListener('click', () => {
                         activeSeatId = seatId;
@@ -141,7 +150,9 @@ confirmClearBtn.addEventListener('click', () => {
     cinemaLayout.forEach(rowArr => {
         rowArr.forEach(seatId => {
             if (seatId !== 'aisle' && seatId !== 'gap') {
-                if (seats[seatId] !== 3) { // Leaves damaged seats untouched
+                // IMPORTANT: Only clear if it is Assigned (1) or Occupied (2).
+                // Leaves Damaged, Bishop, Worship, and Dance untouched!
+                if (seats[seatId] === 1 || seats[seatId] === 2) { 
                     seats[seatId] = 0;
                 }
             }

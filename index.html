@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>City Hope Seating</title>
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
     <header>
@@ -22,6 +22,10 @@
                 <div class="stat occupied-stat">
                     <span id="countOccupied" class="stat-number">0</span> Occupied
                 </div>
+                <div class="divider">|</div>
+                <div class="stat reserved-stat">
+                    <span id="countReserved" class="stat-number">0</span> Reserved
+                </div>
             </div>
             <button id="resetBtn" class="outline-btn">Clear All</button>
         </div>
@@ -30,8 +34,11 @@
     <main>
         <div class="legend">
             <div class="legend-item"><span class="box vacant"></span> Vacant</div>
-            <div class="legend-item"><span class="box assigned"></span> Assigned</div>
             <div class="legend-item"><span class="box occupied"></span> Occupied</div>
+            <div class="legend-item"><span class="box assigned"></span> Assigned</div>
+            <div class="legend-item"><span class="box bishop"></span> Bishop</div>
+            <div class="legend-item"><span class="box worship"></span> Worship</div>
+            <div class="legend-item"><span class="box dance"></span> Dance</div>
             <div class="legend-item"><span class="box damaged"></span> Damaged</div>
         </div>
 
@@ -43,9 +50,12 @@
             <h2 id="selectedSeatTitle">Seat --</h2>
             <div class="action-grid">
                 <button class="action-btn vacant-btn" data-state="0">Vacant</button>
-                <button class="action-btn assigned-btn" data-state="1">Assigned</button>
                 <button class="action-btn occupied-btn" data-state="2">Occupied</button>
-                <button class="action-btn damaged-btn" data-state="3">Damaged</button>
+                <button class="action-btn assigned-btn" data-state="1">Assigned</button>
+                <button class="action-btn bishop-btn" data-state="4">Bishop</button>
+                <button class="action-btn worship-btn" data-state="5">Worship</button>
+                <button class="action-btn dance-btn" data-state="6">Dance</button>
+                <button class="action-btn damaged-btn" data-state="3" style="grid-column: span 2;">Damaged</button>
             </div>
             <button id="closeActionMenu" class="outline-btn close-btn">Cancel</button>
         </div>
@@ -54,7 +64,7 @@
     <div id="confirmModal" class="modal">
         <div class="modal-content">
             <h2>Clear All Seats?</h2>
-            <p>This will reset all assignments for the next service. Are you sure?</p>
+            <p>This clears Attendees and Assigned seats. Ministry and Damaged seats will remain saved. Are you sure?</p>
             <div class="modal-actions">
                 <button id="cancelBtn" class="outline-btn">Cancel</button>
                 <button id="confirmClearBtn" class="danger-btn">Yes, Clear</button>
