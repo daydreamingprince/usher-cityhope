@@ -17,13 +17,11 @@ const cinemaLayout = [
 const seatGrid = document.getElementById('seating-grid');
 const resetBtn = document.getElementById('resetBtn');
 
-// New elements for the stats
 const countVacantEl = document.getElementById('countVacant');
 const countOccupiedEl = document.getElementById('countOccupied');
 
 let seats = JSON.parse(localStorage.getItem('cityHopeCinemaLayout')) || {};
 
-// --- Menu State Variables ---
 let activeSeatId = null; 
 const seatActionMenu = document.getElementById('seatActionMenu');
 const selectedSeatTitle = document.getElementById('selectedSeatTitle');
@@ -34,18 +32,21 @@ function saveSeats() {
     localStorage.setItem('cityHopeCinemaLayout', JSON.stringify(seats));
 }
 
-// --- NEW: Calculate Stats ---
+// --- NEW FIX: Strictly count only valid layout seats ---
 function updateCounters() {
     let vacantCount = 0;
     let occupiedCount = 0;
 
-    // We simply loop through the seats object to find out what state they are in
-    for (const key in seats) {
-        if (seats[key] === 0) vacantCount++;
-        if (seats[key] === 2) occupiedCount++;
-    }
+    cinemaLayout.forEach(rowArr => {
+        rowArr.forEach(seatId => {
+            if (seatId !== 'aisle' && seatId !== 'gap') {
+                const state = seats[seatId] !== undefined ? seats[seatId] : 0;
+                if (state === 0) vacantCount++;
+                if (state === 2) occupiedCount++;
+            }
+        });
+    });
 
-    // Update the DOM
     countVacantEl.textContent = vacantCount;
     countOccupiedEl.textContent = occupiedCount;
 }
@@ -81,7 +82,6 @@ function renderSeats() {
                     gap.classList.add('hidden-seat');
                     secEl.appendChild(gap);
                 } else {
-                    // Ensures all valid seats are added to the dictionary properly
                     if (seats[seatId] === undefined) { seats[seatId] = 0; }
 
                     const seatEl = document.createElement('div');
@@ -108,11 +108,10 @@ function renderSeats() {
         seatGrid.appendChild(rowEl);
     });
 
-    // Run the counter update every time the grid renders
     updateCounters();
 }
 
-// --- Action Menu Logic ---
+// Action Menu Logic
 actionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         if (activeSeatId) {
@@ -131,7 +130,7 @@ closeActionMenu.addEventListener('click', () => {
     activeSeatId = null;
 });
 
-// --- Clear All Modal Logic ---
+// Clear All Logic
 const confirmModal = document.getElementById('confirmModal');
 const cancelBtn = document.getElementById('cancelBtn');
 const confirmClearBtn = document.getElementById('confirmClearBtn');
@@ -140,9 +139,16 @@ resetBtn.addEventListener('click', () => { confirmModal.classList.add('active');
 cancelBtn.addEventListener('click', () => { confirmModal.classList.remove('active'); });
 
 confirmClearBtn.addEventListener('click', () => {
-    for (let key in seats) {
-        if (seats[key] !== 3) { seats[key] = 0; }
-    }
+    // NEW FIX: Only clears valid seats in the current layout, ignoring ghost data
+    cinemaLayout.forEach(rowArr => {
+        rowArr.forEach(seatId => {
+            if (seatId !== 'aisle' && seatId !== 'gap') {
+                if (seats[seatId] !== 3) { // Leaves damaged seats untouched
+                    seats[seatId] = 0;
+                }
+            }
+        });
+    });
     saveSeats();
     renderSeats();
     confirmModal.classList.remove('active');
@@ -150,9 +156,7 @@ confirmClearBtn.addEventListener('click', () => {
 
 // Close Modals by Clicking the Dark Background
 window.addEventListener('click', (e) => {
-    if (e.target === confirmModal) {
-        confirmModal.classList.remove('active');
-    }
+    if (e.target === confirmModal) { confirmModal.classList.remove('active'); }
     if (e.target === seatActionMenu) {
         seatActionMenu.classList.remove('active');
         activeSeatId = null;
